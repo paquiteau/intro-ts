@@ -10,7 +10,7 @@ compile_pdf:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - latexmk -pdf main.tex
-    - scp main.pdf pac@stark.comby.xyz:ftp/public/ipe/report.pdf
+    - scp main.pdf pac@stark.comby.xyz:ftp/public/pres/intro-ts.pdf
   artifacts:
     paths:
       - main.pdf
