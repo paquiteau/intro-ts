@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -20,6 +20,28 @@
 \date{\today}
 \setbeameroption{show notes on second screen}
 \tikzset{every picture/.style={execute at begin picture={\shorthandoff{:;!?};}}}
+
+\pgfplotsset{
+  timeplot/.style={
+    xlabel={\tiny$t[s]$},ylabel={\tiny$x(t)$},
+    axis lines=middle,
+    xlabel style={at=(current axis.right of origin), anchor=west},
+    ylabel style={at=(current axis.above origin), anchor=south},
+    ticks=none,
+    enlarge y limits={rel=0.13},
+    enlarge x limits={rel=0.07},
+  },
+  freqplot/.style={
+    xlabel={\tiny$f[Hz]$},ylabel={\tiny$A(f)$},
+    axis lines=middle,
+    xlabel style={at=(current axis.right of origin), anchor=west},
+    ylabel style={at=(current axis.above origin), anchor=south},
+ %   enlarge y limits={rel=0.13},
+    enlarge x limits={rel=0.07},
+    ticks=none,
+  }
+}
+
 
 \begin{document}
 \begin{frame}
@@ -101,7 +123,7 @@
     \item[Détection:\pause] Extraction d'un signal utile du bruit\pause
     \note[item]{temps d'arrivée d'un signal}
     \item[Filtrage:\pause] Élimination de composante indésirable\pause
-    \note[item]{Audio, séparer basse et aigus, retirer le bruit, Instagram}
+    \note[item]{Oreilles, séparer basse et aigus, retirer le bruit, Instagram}
     \item[Codage:\pause] Mise en forme pour transmission\pause
     \note[item]{Toutes les communications numériques}
     \item[Compression:\pause] Réduction de la redondance d'information.\pause
@@ -120,18 +142,18 @@
   \includegraphics[width=\textwidth]{buzz.png}
 \end{frame}
 \note[enumerate]{
-  \item Smart City: 5G , transmission, compression, analyse,
-  \item IRM de cerveau -> imagerie médicale: filtrage, segmentation, reconstruction/synthèse...
+  \item Smart City: 5G, transmission, compression, analyse,
+  \item IRM de cerveau -> imagerie médicale: filtrage, segmentation, reconstruction/synthèse\ldots
   \item Vision Artificielle: segmentation, reconnaissance, fiabilité
-  \item Réseau de neurone: assez indépendant, mais beaucoup de possibilté, le TS comme prérequis.
+  \item LHC: les tres grands instruments pour voir le tout petit
   \item Voiture Autonome: protocoles de transmission, sécurité
   \item SpaceX -> aérospatial: communiquer sur des miliers de kilomètre: modulation, codage, compression
 }
 \begin{frame}{Classification des signaux}
   \begin{itemize}
-    \item Nombre de variable (1-D (son), 2-D (image), N-D ...)
+    \item Nombre de variable (1-D (son), 2-D (image), N-D,\ldots)
     \item réel/complexe
-    \item périodiques (ex: $\cos(2\pi ft)$))
+    \item périodiques (ex: $\cos(2\pi ft)$)
     \item Déterministe/aléatoire
     \begin{itemize}
       \item déterministe: évolution complètement prédictible
@@ -145,55 +167,221 @@
 \end{frame}
 \subsection{Dualité Fréquentielle}
 \begin{frame}[fragile]{Analyse Spectrale}
-  \hspace*{-2em}
+  \vspace*{-1em}
+  \begin{block}{Expérience}
+    \begin{itemize}
+      \item<1-> 3 sons à la même fréquence, mais différente forme d'onde.
+      \item<5-> On entend d'autres fréquences, sans les voir: \visible<5->{\it un spectre}
+    \end{itemize}
+
+  \end{block}
+  %% Time
   \begin{columns}
     \begin{column}{0.3\textwidth}
       \centering
       \begin{tikzpicture}
         \begin{axis}
-          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
-          domain =0:10]
+          [width=1.33\textwidth, height=0.4\textheight,
+          domain =0:10,
+          timeplot]
           \addplot+[no marks, smooth]{sin(360*x/5)};
         \end{axis}
-      \end{tikzpicture}
+      \end{tikzpicture}\pause[3]
     \end{column}
     \begin{column}{0.3\textwidth}
       \centering
       \begin{tikzpicture}
         \begin{axis}
-          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
-          domain =0:10]
+          [timeplot, width=1.33\textwidth, height=0.4\textheight,]
           \addplot+[mark=none] coordinates {
             (0,0) (1.25,1) (3.75,-1) (6.25,1) (8.75,-1) (10,0)
           };
         \end{axis}
-      \end{tikzpicture}
+      \end{tikzpicture}\pause[4]
     \end{column}
     \begin{column}{0.3\textwidth}
       \centering
       \begin{tikzpicture}
         \begin{axis}
-          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
-          domain =0:10]
+          [timeplot,
+          width=1.33\textwidth, height=0.4\textheight,]
           \addplot+[mark=none,const plot] coordinates {
             (0,1) (2.5,-1) (5,1) (7.5,-1) (10,1)
           };
- %         \addplot[no marks, smooth]{};
+        \end{axis}
+      \end{tikzpicture}\pause[4]
+    \end{column}
+  \end{columns}
+  %% Freq
+  \note{La3: 440 Hz,  apporter ordi/téléphone + Enceinte}
+  \pause[6]
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+       \begin{tikzpicture}
+        \begin{axis}
+          [freqplot,
+          width=1.33\textwidth, height=0.4\textheight, ticks=none,
+          xmin=0,xmax=10,ymin=0,ymax=1.2,
+          ]
+          \draw[blue]
+          (axis cs:1,0) -- (axis cs:1,1)   node{$\cdot$};
         \end{axis}
       \end{tikzpicture}
     \end{column}
-  \end{columns}
-  \begin{block}{Expérience}
-    3 sons à la même fréquence, mais différente forme d'onde.
-  \end{block}
+    \begin{column}{.3\textwidth}
+       \begin{tikzpicture}
+        \begin{axis}
+          [freqplot,width=1.33\textwidth, height=0.4\textheight,
+          xmin=0,xmax=10,ymin=0,ymax=1.2,
+          ]
+          \draw[blue]
+          (axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$}
+          (axis cs:3,0) -- (axis cs:3,0.11) node{$\cdot$}
+          (axis cs:5,0) -- (axis cs:5,0.04) node{$\cdot$}
+          (axis cs:7,0) -- (axis cs:7,0.02) node{$\cdot$}
+          (axis cs:9,0) -- (axis cs:9,0.012)node{$\cdot$}
+          ;
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{.3\textwidth}
+       \begin{tikzpicture}
+        \begin{axis}
+          [freqplot, width=1.33\textwidth, height=0.4\textheight,
+          xmin=0,xmax=10,ymin=0,ymax=1.2,
+          ]
+          \draw[blue]
+          (axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$}
+          (axis cs:3,0) -- (axis cs:3,0.33) node{$\cdot$}
+          (axis cs:5,0) -- (axis cs:5,0.2)  node{$\cdot$}
+          (axis cs:7,0) -- (axis cs:7,0.143)node{$\cdot$}
+          (axis cs:9,0) -- (axis cs:9,0.111)node{$\cdot$}
+          ;
+      \end{axis}
+    \end{tikzpicture}
+  \end{column}
+ \end{columns}
 \end{frame}
 
 \note{%
-Joseph Fourier, 1806, préfet de l'Isère,
+  Joseph Fourier, 1806, préfet de l'Isère. Travail sur l'équation de la chaleur (anneau en métal chauffé)
+
 }%
+\begin{frame}{Décomposition de Fourier}
+  \framesubtitle{Les maths}
+  \begin{alertblock}{Théorème (Lycée)}
+    Toute fonction périodique peux s'écrire comme une somme pondérée de fonction sinusoïdale
+    \[
+      x_{per}(t) = \sum_{n=0}^{+\infty}a_{n}cos(2\pi n f_{0}t)+b_{n}sin(2\pi n f_{0}t)
+    \]
+  \end{alertblock}
+  \begin{itemize}
+    \item $(a_{n})$ et $(b_{n})$ sont des suites, appelées coefficients de fourier.
+    \item Les coeffients s'obtienne par produit scalaire sur des fonctions.
+      \note[item]{$a_{n} = \int_{-T/2}^{T/2}x(t)\cos(2\pi nft)dt$}
+    \item Théorème généralisable a toute fonction à énergie fine ($\sim$ toutes les fonctions en physiques).
+      \note[item]{$X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2\pi i ft}d t$}
+  \end{itemize}
+
+\end{frame}
+\begin{frame}[fragile]{Décomposition de Fourier}
+  \framesubtitle{La physique}
+  \begin{tikzpicture}
+    \begin{axis}[timeplot,domain=0:10,
+      height=0.6\textheight,width=1.1\textwidth]
+      \visible<1->{
+      \addplot[mark=none,const plot] coordinates {
+        (0,1) (2.5,-1) (5,1) (7.5,-1) (10,1)
+      };}
+      \foreach \i [count=\ii] in {1,3,5,15,50}{
+        \only<+(1)>{
+          \addplot+[mark=none,blue] table [x=x, y=\i, col sep=comma] {creneau.csv};}
+      }
+    \end{axis}
+  \end{tikzpicture}\\
+  \begin{tikzpicture}
+\begin{axis}
+          [freqplot, width=\textwidth, height=0.3\textheight,
+          xmin=0,xmax=15,ymin=0,ymax=1.2,
+          ]
+          \draw<2->[blue](axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$};
+          \draw<3->[blue](axis cs:3,0) -- (axis cs:3,0.33) node{$\cdot$};
+          \draw<4->[blue](axis cs:5,0) -- (axis cs:5,0.2)  node{$\cdot$};
+          \draw<5->[blue]
+          \foreach \x in {7,9,...,15}{
+            (axis cs:\x,0) -- (axis cs:\x,1/\x)  node{$\cdot$}
+          };
+      \end{axis}
+  \end{tikzpicture}
+      $\hat{x}(t)=
+      \visible<2->{\frac{4A}{\pi}\times\left[\sin(2\pi f_{0}t)\right.}
+      \visible<3->{+\frac{1}{3}\sin(2\pi 3f_{0}t)}
+      \visible<4->{+\frac{1}{5}\sin(2\pi 5f_{0}t)}
+      \visible<5->{+\cdots}
+      \visible<2->{\left.\right]}$
+\end{frame}
+\note{phénomène de Gibbs, du a la discontinuité de la fonction créneau}
+\begin{frame}{Dualité temps-fréquence}
+  \begin{alertblock}{À retenir}
+    Tout signal ``physique'' possède un unique signal équivalent dans le domaine \emph{fréquentiel}. L'operation pour passer de l'un à l'autre est appelé \emph{transformée de Fourier}
+  \end{alertblock}
+  \begin{itemize}[<+->]
+    \item Preuve : Bac+3, rigoureux en Bac+5
+    \item \emph{Tout} type de signaux (son,image, volume 3D)
+    \note[item]{la ou il y a du signal, il y a une TF}
+  \end{itemize}\pause
+  La transformée de fourier est utilisé notamment en:
+  \begin{itemize}[<+->]
+    \item physique quantique
+    \item compression d'image
+    \item cryptographie
+    \item ...
+  \end{itemize}
+
+
+\end{frame}
 
 \subsection{Conversion Analogique Numérique}
-\begin{frame}{Généralité}
+\begin{frame}{Analogique vs Numérique}
+  \framesubtitle{Exemples}
+      \note{Demander 3 exemples Analogique, Numériques}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      Signaux Analogiques:\pause[1]
+      \begin{itemize}
+        \item la voix,
+        \item piste vinyle
+        \item les rayons du soleil
+        \item L'altitude
+      \end{itemize}
+      \pause[2]
+      \begin{block}<4>{}
+        \begin{itemize}
+          \item Continus
+          \item Valeurs quelconques
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Signaux Numériques:\pause[3]
+      \begin{itemize}
+        \item piste CD
+        \item Images
+        \item métronome
+        \item 100111101
+      \end{itemize}
+      \begin{block}<4>{}
+        \begin{itemize}
+          \item temps discret
+          \item valeurs limitées
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Conversion Analogique Numérique}
+  \framesubtitle{Généralité}
 \includegraphics[width=\textwidth]{fig/discret-continu}
 \end{frame}
 \begin{frame}{Echantillonage}
@@ -232,6 +420,11 @@ Joseph Fourier, 1806, préfet de l'Isère,
     \includegraphics[scale=0.3]{ENSPS-revert.png}};
 \end{tikzpicture}
 \end{frame}
+\note{Demander les noms, 1/2 1/2 1/2
+  \item La prépa/L'ENS/Le supérieur
+  \item Le TS
+  \item Bonus: la recherche, au tableau
+}
 \end{document}
 
 %%% Local Variables:
