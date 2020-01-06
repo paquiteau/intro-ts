@@ -1,0 +1,16 @@
+compile_pdf:
+  image: aergus/latex
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan stark.comby.xyz >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - latexmk -pdf main.tex
+    - scp main.pdf pac@stark.comby.xyz:ftp/public/ipe/report.pdf
+  artifacts:
+    paths:
+      - main.pdf

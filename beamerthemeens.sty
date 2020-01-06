@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% BEAMER THEME FOR ENSPS %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% place in same folder as your .tex
+% \usetheme{ens} in preamble
+% also need ENSPS-revert.png
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{ensbeamer}[2019/09/04 Beamer Theme]
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+
+\makeatletter
+\newif\if@section\@sectionfalse
+\DeclareOption{sectiontitle}{
+  \@sectiontrue
+}
+
+\ProcessOptions\relax
+
+\definecolor{bleuens}{RGB}{0,119,139} % bleu ens !
+\definecolor{vertens}{RGB}{0,230,180}
+\definecolor{violetens}{RGB}{125,85,199}
+
+\setbeamercolor{structure}{fg=bleuens}
+%\setbeamercolor{sidebar}{fg=bleuens,bg=white}
+\setbeamercolor{sidebar}{bg=bleuens,fg=white}
+\setbeamercolor{title in sidebar}{fg=white}
+ \setbeamercolor{section in sidebar}{fg=white}
+ \setbeamercolor{section in sidebar shaded}{fg=bleuens!40}
+ \setbeamercolor{subsection in sidebar}{fg=white}
+ \setbeamercolor{subsection in sidebar shaded}{fg=bleuens!60}
+ \setbeamercolor{frametitle}{fg=bleuens,bg=white}
+
+\def\swidth{2cm}
+
+
+
+%
+% -----------------------------
+% Title Page
+
+\setbeamerfont{title}{size=\Huge}
+\setbeamerfont{author}{size=\large}
+\setbeamerfont{institut}{size=\Large}
+\setbeamerfont{subtitle}{size=\Large}
+\setbeamerfont{date}{size=\Large}
+\setbeamertemplate{title page}{%
+\begin{tikzpicture}[remember picture,overlay]
+\fill[bleuens]
+  (current page.north west) rectangle (current page.south east);
+\node
+  at ([yshift=+.15\textheight]current page.center) (title)
+  {\usebeamerfont{title}\textcolor{white}{
+      \begin{tabular}{c}
+        \inserttitle
+        \end{tabular}}};
+
+\node[below=2em]
+  at(title) (subtitle)
+  {\usebeamerfont{subtitle}\textcolor{white}{\insertsubtitle}};
+
+\node
+  at ([yshift=-70pt]current page.center) (institute)
+  {\usebeamerfont{institute}\textcolor{white}{\insertinstitute}};
+
+\node
+  at ([yshift=-50pt]current page.center) (author)
+  {\usebeamerfont{author}\textcolor{white}{\insertauthor}};
+
+\node[anchor=north west]
+  at (current page.north west) (logo)
+  {\usebeamercolor[fg]{titlegraphic}
+    \includegraphics[scale=0.3]{ENSPS-revert.png}};
+
+
+\end{tikzpicture}
+}
+
+
+
+%
+% --------------------------------------
+% Sidebar
+
+\useoutertheme[height=0pt,width=\swidth, hideothersubsections]{sidebar}
+
+\setbeamertemplate{sidebar left}
+{
+  {\vspace{0.9em}
+\hspace{-0.4em}
+    \begin{minipage}{\swidth}
+      \centering
+      \insertlogo
+    \end{minipage}
+  \usebeamerfont{title in sidebar}%
+    \vskip1em%
+    \usebeamercolor[fg]{title in sidebar}%
+    \insertshorttitle[width=\swidth,center,respectlinebreaks]\par%
+    \vskip.5em%
+  }%
+  \insertverticalnavigation{\swidth}%
+  \vfill
+  \hbox to2cm{\hskip0.6cm\usebeamerfont{section in sidebar} \strut\usebeamercolor[fg]{section in    sidebar}\insertframenumber/\inserttotalframenumber\hfill}%
+  \vskip3pt%
+}%
+
+
+% --------------------------------------------------------------------------
+% Section as frame title
+\if@section
+\addtobeamertemplate{frametitle}{
+   \let\insertframetitle\insertsectionhead}{}
+\addtobeamertemplate{frametitle}{
+   \let\insertframesubtitle\insertsubsectionhead}{}
+
+\makeatletter
+ \CheckCommand*\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+  \renewcommand*\beamer@checkframetitle{\global\let\beamer@frametitle\relax\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+
+  \fi
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\setbeamertemplate{navigation symbols}[horizontal]
+\setbeamertemplate{description item}{\insertdescriptionitem\hfill}
+
+% ---------------------------------------------------
+% BLOC
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block body}{fg=black,bg=bleuens!20}
+\setbeamercolor{block title}{fg=black,bg=bleuens!40}
+
+\setbeamercolor{block body example}{fg=black,bg=vertens!40}
+\setbeamercolor{block title example}{fg=black,bg=vertens}
+
+\setbeamercolor{block body alerted}{fg=black,bg=violetens!40}
+\setbeamercolor{block title alerted}{fg=black,bg=violetens}
+
+\setbeamercolor{subitem}{fg=violetens}
+
+\makeatother
+% LOGO :
+\logo{\includegraphics[scale=0.3]{ENSPS-revert.png}}

@@ -1,0 +1,5 @@
+*.pdf
+.auctex-auto/
+auto/
+!/svg/*.pdf
+patchwork/

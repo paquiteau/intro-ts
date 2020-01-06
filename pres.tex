@@ -1,0 +1,238 @@
+\documentclass[handout]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[francais]{babel}
+\usepackage{graphicx}
+\usepackage{ulem}
+\usepackage{pgfpages}
+\usepackage{pgfplots}
+\usetheme[]{ens}
+%\usetheme[sectiontitle]{crans}
+\title{Le traitement du signal \\et\\ le post-bac}
+% A subtitle is optional and this may be deleted
+\subtitle{}
+\author[]{\textsc{Pierre-Antoine Comby}}
+\institute{pierre-antoine.comby@ens-paris-saclay.fr}
+\date{\today}
+\setbeameroption{show notes on second screen}
+\tikzset{every picture/.style={execute at begin picture={\shorthandoff{:;!?};}}}
+
+\begin{document}
+\begin{frame}
+   \titlepage
+\end{frame}
+
+% \begin{frame}{Sommaire}
+%   \tableofcontents[subsubsectionstyle=hide]
+% \end{frame}
+\begin{frame}{Objectif de la séance}
+  \begin{itemize}
+    \item Donner un avant goût des études supérieures en maths/physique.
+    \note[item]{ Exemple de la ``voie royale''/parcours d'excellence. Ne pas négliger les parcours universitaires, plus spécifiques.}
+    \item Introduire des notions niveau bac/bac+1 de traitement du signal (utile pour un TPE par ex.)
+    \note[item]{Avec le moins de prérequis possible, pas facile, il va falloir rester bien concentré. Ne pas hésiter à lever la main. Donner votre Prénom}
+    \item Présenter mon parcours et mon travail actuel.
+  \end{itemize}
+\end{frame}
+
+\section{Mon parcours}
+\label{sec:label}
+\begin{frame}{Curriculum Vitae}
+  \begin{description}
+    \item[2012-2015:] Lycée Charles Péguy, BAC S , ABIBAC.
+    \item[2015-2017:] Classe Prépa (Lycée Saint Louis, Paris)
+      \begin{itemize}
+        \item PCSI
+        \item PSI*
+      \end{itemize}
+    \item[2017-2021:] Ecole Normale Supérieure \sout{Cachan} Paris-Saclay
+      \begin{itemize}
+        \item L3 Sciences de l'ingénieur/Physique
+        \item M1 Electronique, Electrotechnique, Automatique
+        \item \textit{M2 Stage de recherche à Karlsruhe: Tomographie à ultrason, imagerie médicale}
+        \item \textcolor{gray}{M2R: Master Traitement du Signal/IA}
+      \end{itemize}
+    \item[2021-futur:] \textcolor{gray}{Probablemement une thèse}.
+  \end{description}
+\end{frame}
+\note{Un peu de chance, un peu de talent, beaucoup de travail}
+
+\section{Introduction au traitement du signal}
+\subsection{Définition}
+\label{sec:label}
+\begin{frame}{Le traitement du signal}
+  \begin{block}{Définition}
+    \begin{itemize}
+      \item Un \textbf{signal} est une fonction d'une ou plusieurs variables qui véhicule de l'information sur un phénomène physique.
+      \pause
+      \item Un \textbf{système} (de traitement du signal) transforme un ou des signaux en d'autres signaux ou paramètre, dans le but d'en extraire de l'information.
+      \end{itemize}
+  \end{block}
+  \begin{exampleblock}{Application}
+    \begin{columns}
+      \begin{column}{0.5\textwidth}
+        \begin{itemize}
+          \item mesures physiques
+          \item télécommunication
+          \item Fusées
+          \item Musique
+        \end{itemize}
+      \end{column}\pause
+      \begin{column}{0.5\textwidth}
+        \begin{itemize}
+          \item Traitement d'image
+          \item Biologie
+          \item Imagerie médicale,
+          \item mécanique, etc
+        \end{itemize}
+      \end{column}
+    \end{columns}
+  \end{exampleblock}
+\end{frame}
+\begin{frame}{Exemple élémentaire de TS}
+  \setlength{\leftmargini}{2.5cm}         %new code: set margin length to 0
+  \begin{itemize}
+    \item[Mesure:\pause] Estimation de grandeurs caractéristiques\pause
+    \note[item]{grandeurs statistiques}
+    \item[Détection:\pause] Extraction d'un signal utile du bruit\pause
+    \note[item]{temps d'arrivée d'un signal}
+    \item[Filtrage:\pause] Élimination de composante indésirable\pause
+    \note[item]{Audio, séparer basse et aigus, retirer le bruit, Instagram}
+    \item[Codage:\pause] Mise en forme pour transmission\pause
+    \note[item]{Toutes les communications numériques}
+    \item[Compression:\pause] Réduction de la redondance d'information.\pause
+    \note[item]{JPEG(3 à 100 fois plus petit), MP3, faire une fiche de cours}
+    \item[Modulation:\pause] Adaptation d'un signal aux caractéristiques d'une voie de transmission\pause
+    \note[item]{radio AM (WW2), FM }
+    \item[Segmentation:\pause] Découpage en parties homogènes\pause
+    \note[item]{Imagerie médicale, Filtre snapchat}
+    \item[Reconnaissance:\pause] Identification de formes appartenant à un dictionnaire.\pause
+    \note[item]{Filtre Snapchat}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Encore des exemples}
+  \centering
+  \includegraphics[width=\textwidth]{buzz.png}
+\end{frame}
+\note[enumerate]{
+  \item Smart City: 5G , transmission, compression, analyse,
+  \item IRM de cerveau -> imagerie médicale: filtrage, segmentation, reconstruction/synthèse...
+  \item Vision Artificielle: segmentation, reconnaissance, fiabilité
+  \item Réseau de neurone: assez indépendant, mais beaucoup de possibilté, le TS comme prérequis.
+  \item Voiture Autonome: protocoles de transmission, sécurité
+  \item SpaceX -> aérospatial: communiquer sur des miliers de kilomètre: modulation, codage, compression
+}
+\begin{frame}{Classification des signaux}
+  \begin{itemize}
+    \item Nombre de variable (1-D (son), 2-D (image), N-D ...)
+    \item réel/complexe
+    \item périodiques (ex: $\cos(2\pi ft)$))
+    \item Déterministe/aléatoire
+    \begin{itemize}
+      \item déterministe: évolution complètement prédictible
+      \item aléatoire: non prédictible, non reproductible.
+    \end{itemize}
+    \item Continus / Discret
+    \begin{itemize}
+      \item Analogique/Numérique
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\subsection{Dualité Fréquentielle}
+\begin{frame}[fragile]{Analyse Spectrale}
+  \hspace*{-2em}
+  \begin{columns}
+    \begin{column}{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}
+          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
+          domain =0:10]
+          \addplot+[no marks, smooth]{sin(360*x/5)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}
+          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
+          domain =0:10]
+          \addplot+[mark=none] coordinates {
+            (0,0) (1.25,1) (3.75,-1) (6.25,1) (8.75,-1) (10,0)
+          };
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}
+          [samples=100,grid=major, width=1.33\textwidth, height=0.5\textheight,
+          domain =0:10]
+          \addplot+[mark=none,const plot] coordinates {
+            (0,1) (2.5,-1) (5,1) (7.5,-1) (10,1)
+          };
+ %         \addplot[no marks, smooth]{};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \begin{block}{Expérience}
+    3 sons à la même fréquence, mais différente forme d'onde.
+  \end{block}
+\end{frame}
+
+\note{%
+Joseph Fourier, 1806, préfet de l'Isère,
+}%
+
+\subsection{Conversion Analogique Numérique}
+\begin{frame}{Généralité}
+\includegraphics[width=\textwidth]{fig/discret-continu}
+\end{frame}
+\begin{frame}{Echantillonage}
+
+\end{frame}
+\begin{frame}{Quantification}
+
+\end{frame}
+
+
+
+
+\section{Vos Question}
+
+\begin{frame}
+\begin{tikzpicture}[remember picture,overlay]
+\fill[bleuens](current page.north west) rectangle (current page.south east);
+\node at ([yshift=+.15\textheight]current page.center) (title)
+  {\usebeamerfont{title}\textcolor{white}{Merci pour votre attention}};
+
+\node[below=2em]
+  at(title) (subtitle)
+  {\usebeamerfont{subtitle}\textcolor{white}{Des questions ?}};
+
+\node
+  at ([yshift=-70pt]current page.center) (institute)
+  {\usebeamerfont{institute}\textcolor{white}{\insertinstitute}};
+
+\node
+  at ([yshift=-50pt]current page.center) (author)
+  {\usebeamerfont{author}\textcolor{white}{\insertauthor}};
+
+\node[anchor=north west]
+  at (current page.north west) (logo)
+  {\usebeamercolor[fg]{titlegraphic}
+    \includegraphics[scale=0.3]{ENSPS-revert.png}};
+\end{tikzpicture}
+\end{frame}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "francais"
+%%% End:
