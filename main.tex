@@ -9,7 +9,8 @@
 \usepackage{pgfplots}
 \graphicspath{{./fig/}}
 \usetheme[]{ens}
-
+\usepackage{float}
+\usepackage{subcaption}
 
 %\usetheme[sectiontitle]{crans}
 \title{Le traitement du signal \\et le post-bac}
@@ -38,7 +39,16 @@
     ylabel style={at=(current axis.above origin), anchor=south},
  %   enlarge y limits={rel=0.13},
     enlarge x limits={rel=0.07},
-    ticks=none,
+    xtick=\empty,ytick=\empty
+  },
+  echplot/.style={
+    axis lines = middle,
+    width=\textwidth,
+    height=0.4\textheight,
+    xmin = -20 ,xmax = 20, ymin = -0.1, ymax = 1.5,
+    x tick label style={font=\footnotesize},
+    ytick=\empty,
+    xlabel = {\tiny $f$},
   }
 }
 
@@ -52,12 +62,13 @@
 %   \tableofcontents[subsubsectionstyle=hide]
 % \end{frame}
 \begin{frame}{Objectif de la séance}
-  \begin{itemize}
+  \begin{itemize}[<+->]
     \item Donner un avant goût des études supérieures en maths/physique.
-    \note[item]{ Exemple de la ``voie royale''/parcours d'excellence. Ne pas négliger les parcours universitaires, plus spécifiques.}
+    \note<.->[item]{ Exemple de la ``voie royale''/parcours d'excellence. Ne pas négliger les parcours universitaires, plus spécifiques.}
     \item Introduire des notions niveau bac/bac+1 de traitement du signal (utile pour un TPE par ex.)
-    \note[item]{Avec le moins de prérequis possible, pas facile, il va falloir rester bien concentré. Ne pas hésiter à lever la main. Donner votre Prénom}
+    \note<.->[item]{Avec le moins de prérequis possible, pas facile, il va falloir rester bien concentré. Ne pas hésiter à lever la main. Donner votre Prénom}
     \item Présenter mon parcours et mon travail actuel.
+    \note<.->[item]{Le travail de recherche en bonus}
   \end{itemize}
 \end{frame}
 
@@ -90,8 +101,10 @@
   \begin{block}{Définition}\pause
     \begin{itemize}[<+->]
       \item Un \textbf{signal} est une fonction d'une ou plusieurs variables qui véhicule de l'information sur un phénomène physique.
+      \note[item]<+->{tout est signal}
       \pause
       \item Un \textbf{système} (de traitement du signal) transforme un ou des signaux en d'autres signaux ou paramètre, dans le but d'en extraire de l'information.
+      \note[item]<+->{Tout est systeme}
       \end{itemize}
   \end{block}
   \begin{exampleblock}{Application}
@@ -119,21 +132,21 @@
   \setlength{\leftmargini}{2.5cm}         %new code: set margin length to 0
   \begin{itemize}
     \item[Mesure:\pause] Estimation de grandeurs caractéristiques\pause
-    \note[item]{grandeurs statistiques}
+    \note<.(-1)->[item]{grandeurs statistiques}
     \item[Détection:\pause] Extraction d'un signal utile du bruit\pause
-    \note[item]{temps d'arrivée d'un signal}
+    \note<.(-1)->[item]{temps d'arrivée d'un signal}
     \item[Filtrage:\pause] Élimination de composante indésirable\pause
-    \note[item]{Oreilles, séparer basse et aigus, retirer le bruit, Instagram}
+    \note<.(-1)->[item]{Oreilles, séparer basse et aigus, retirer le bruit, Instagram}
     \item[Codage:\pause] Mise en forme pour transmission\pause
-    \note[item]{Toutes les communications numériques}
+    \note<.(-1)->[item]{Toutes les communications numériques}
     \item[Compression:\pause] Réduction de la redondance d'information.\pause
-    \note[item]{JPEG(3 à 100 fois plus petit), MP3, faire une fiche de cours}
+    \note<.(-1)->[item]{JPEG(3 à 100 fois plus petit), MP3, faire une fiche de cours}
     \item[Modulation:\pause] Adaptation d'un signal aux caractéristiques d'une voie de transmission\pause
-    \note[item]{radio AM (WW2), FM }
+    \note<.(-1)->[item]{radio AM (WW2), FM }
     \item[Segmentation:\pause] Découpage en parties homogènes\pause
-    \note[item]{Imagerie médicale, Filtre snapchat}
+    \note<.(-1)->[item]{Imagerie médicale, Filtre snapchat}
     \item[Reconnaissance:\pause] Identification de formes appartenant à un dictionnaire.\pause
-    \note[item]{Filtre Snapchat}
+    \note<.(-1)->[item]{Filtre Snapchat}
   \end{itemize}
 \end{frame}
 
@@ -165,6 +178,13 @@
     \end{itemize}
   \end{itemize}
 \end{frame}
+\note{On étudie ici seulement des signaux réel, périodique,
+  on va étudier/rappeler
+  \begin{itemize}
+    \item la dualité fréquentiel de tout signal
+    \item les bases de la conversion analogique numérique (tous les instruments de mesure physiques)
+  \end{itemize}
+}
 \subsection{Dualité Fréquentielle}
 \begin{frame}[fragile]{Analyse Spectrale}
   \vspace*{-1em}
@@ -213,7 +233,13 @@
     \end{column}
   \end{columns}
   %% Freq
-  \note{La3: 440 Hz,  apporter ordi/téléphone + Enceinte}
+  \note{La3: 440 Hz,  apporter ordi/téléphone + Enceinte
+    \begin{itemize}
+      \item Sinus
+      \item triangle
+      \item Créneau /carré
+    \end{itemize}
+  }
   \pause[6]
   \begin{columns}
     \begin{column}{.3\textwidth}
@@ -260,14 +286,15 @@
       \end{axis}
     \end{tikzpicture}
   \end{column}
- \end{columns}
+\end{columns}
+\note{Les autres son proviennent d'autres fréquences, }
 \end{frame}
 
+\begin{frame}{Décomposition de Fourier}
 \note{%
   Joseph Fourier, 1806, préfet de l'Isère. Travail sur l'équation de la chaleur (anneau en métal chauffé)
 
 }%
-\begin{frame}{Décomposition de Fourier}
   \framesubtitle{Les maths}
   \begin{alertblock}{Théorème (Lycée)}
     Toute fonction périodique peux s'écrire comme une somme pondérée de fonction sinusoïdale
@@ -295,7 +322,7 @@
       };}
       \foreach \i [count=\ii] in {1,3,5,15,50}{
         \only<+(1)>{
-          \addplot+[mark=none,blue] table [x=x, y=\i, col sep=comma] {creneau.csv};}
+          \addplot+[mark=none,blue,thick] table [x=x, y=\i, col sep=comma] {creneau.csv};}
       }
     \end{axis}
   \end{tikzpicture}\\
@@ -303,11 +330,13 @@
 \begin{axis}
           [freqplot, width=\textwidth, height=0.3\textheight,
           xmin=0,xmax=15,ymin=0,ymax=1.2,
+          xtick={1,3,...,15},         xticklabels={$f_{0}$,$3f_{0}$,$5f_{0}$,$7f_{0}$,$9f_{0}$,$11f_{0}$,$13f_{0}$,$15f_{0}$},
+          x tick label style={font=\tiny}
           ]
-          \draw<2->[blue](axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$};
-          \draw<3->[blue](axis cs:3,0) -- (axis cs:3,0.33) node{$\cdot$};
-          \draw<4->[blue](axis cs:5,0) -- (axis cs:5,0.2)  node{$\cdot$};
-          \draw<5->[blue]
+          \draw<2->[blue,very thick](axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$};
+          \draw<3->[blue,very thick](axis cs:3,0) -- (axis cs:3,0.33) node{$\cdot$};
+          \draw<4->[blue,very thick](axis cs:5,0) -- (axis cs:5,0.2)  node{$\cdot$};
+          \draw<5->[blue,very thick]
           \foreach \x in {7,9,...,15}{
             (axis cs:\x,0) -- (axis cs:\x,1/\x)  node{$\cdot$}
           };
@@ -326,18 +355,28 @@
     Tout signal ``physique'' possède un unique signal équivalent dans le domaine \emph{fréquentiel}. L'operation pour passer de l'un à l'autre est appelé \emph{transformée de Fourier}
   \end{alertblock}
   \begin{itemize}[<+->]
-    \item Preuve : Bac+3, rigoureux en Bac+5
+    \item Preuve: Bac+3, rigoureux en Bac+5
     \item \emph{Tout} type de signaux (son,image, volume 3D)
     \note[item]{la ou il y a du signal, il y a une TF}
   \end{itemize}\pause
+  \begin{block}{Remarque}
+    Tout signal périodique possède un spectre discret.
+  \end{block}\pause
   La transformée de fourier est utilisé notamment en:
-  \begin{itemize}[<+->]
-    \item physique quantique
-    \item compression d'image
-    \item cryptographie
-    \item ...
-  \end{itemize}
-
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}[<+->]
+        \item physique quantique
+        \item compression d'image
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}[<+->]
+        \item cryptographie
+        \item ...
+      \end{itemize}
+    \end{column}
+  \end{columns}
 
 \end{frame}
 
@@ -384,13 +423,203 @@
   \framesubtitle{Généralité}
 \includegraphics[width=\textwidth]{fig/discret-continu}
 \end{frame}
-\begin{frame}{Echantillonage}
+\note{
+  \begin{itemize}
+    \item On ne va etudier que l'échantillonnage en détail
+    \item La quantification -> faire des arrondis -> pertes d'information. (entropie de shannon hors niveau)
+  \end{itemize}
 
+}
+\newcommand\xticklabel{}
+\newcommand\xtickpos{\empty}
+\begin{frame}[fragile]{Echantillonage}
+   \begin{block}{Échantillonneur}
+      \xticklabel
+    \begin{columns}
+      \begin{column}{0.55\textwidth}
+        \begin{itemize}
+          \item Multiplication par une fonction peigne
+          \item Période d'échantillonage $T_{e}$
+          \note[item]{Période -> Fréquence -> fourier}
+        \end{itemize}
+      \end{column}
+      \visible<2->{
+      \begin{column}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+          \node[draw,right=2em](E) {%
+            \begin{tikzpicture}[scale=0.5]
+              \draw (0,0) -- (2,0);
+              \draw[-latex] (0,0) -- (0,1);
+              \draw[-latex] (1,0) -- (1,1);
+              \draw[-latex] (2,0) -- (2,1);
+            \end{tikzpicture}
+          };
+          \node[left=3em] (In) at (E) {$x_{c}(t)$};
+          \node[right=3em] (Out) at (E){$x_{e}(t)$};
+          \draw[->] (In) -- (E);
+          \draw[->] (E) -- (Out);
+        \end{tikzpicture}
+      \end{column}}
+    \end{columns}
+  \end{block}
+  % \centering\vspace{2em}\hspace{2em}
+  \begin{tikzpicture}
+    \only<1-2>{
+    \pgfplotsset{xtick=\empty}}
+    \only<3>{
+    \pgfplotsset{
+      xtick={1.5,3,4.5,6,7.5,9},
+      xticklabels={$T_e$,$2T_e$,$3T_e$,$4T_e$,$5T_e$,$6T_e$}
+    }}
+       \begin{axis}
+        [axis y line=middle,axis x line=bottom,
+        width=\textwidth,height=0.4\textheight, xmin=0,xmax = 10,ymin=-2,ymax=3, ytick =\empty, ylabel={\tiny{\color{blue}$x_c(t)$}\only<3>{,{\color{red}$x_E(t)$}}},
+%        xtick = {1.5,3,4.5,6,7.5,9},
+ %       xticklabels={$T_e$,$2T_e$,$3T_e$,$4T_e$,$5T_e$,$6T_e$},
+    %    xtick={\xtickpos},
+     %   \expandafter xticklabels=\expandafter\xticklabel,
+        x tick label style={font=\tiny}]
+
+        \addplot+[smooth,no marks] plot coordinates{(0,2) (2,1.5) (3,2) (4,1) (5,-1.5)(6,-1.5)(7,0)(9,1)};
+        \draw<3>[dashed,red]
+        (axis cs:1.5,-2) -- (axis cs:1.5,1.6)node{$\bullet$}
+        (axis cs:3,-2)   -- (axis cs:3,2)node{$\bullet$}
+        (axis cs:4.5,-2) -- (axis cs:4.5,-.25)node{$\bullet$}
+        (axis cs:6,-2)   -- (axis cs:6,-1.5)node{$\bullet$}
+        (axis cs:7.5,-2) -- (axis cs:7.5,.3)node{$\bullet$}
+        (axis cs:9,-2)   -- (axis cs:9,1)node{$\bullet$};
+      \end{axis}
+    \end{tikzpicture}
 \end{frame}
-\begin{frame}{Quantification}
 
+\begin{frame}[fragile]{Échantillonage}
+  \framesubtitle{Spectre d'un signal échantilloné}
+  \begin{figure}[H]
+  \centering
+    \begin{tikzpicture}
+    \begin{axis}%
+      [echplot,
+      ylabel = {\tiny $|X_{c}(f)|$},
+      xtick = {-5.5,5.5},
+      xticklabels = {$-F_M$, $+F_M$},
+      ]
+      \addplot+[red,no marks] plot coordinates {(-5.5,0) (-3,1) (-0.5,0) (0.5,0) (3,1) (5.5,0)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Spectre du signal continu}
+  \note{Fréquence négative : Ca vient de la formulation générale de la transformée de fourier, symétrique de la partie positive (signaux réel)}
+\end{figure}
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}%
+      [echplot,
+      ylabel = {\tiny$|X_{e}(f)|$},
+      xtick = {-13,-5.5,5.5,13},
+      xticklabels = {$-F_{e}$,$-F_M$, $+F_M$,$F_{e}$},
+      ]
+      \addplot+[no marks, red] plot coordinates {
+        (-5.5,0) (-3,1) (-0.5,0) (0.5,0) (3,1) (5.5,0)
+      };
+      \addplot+[no marks,blue] plot coordinates {
+        (-18.5,0) (-16,1) (-13.5,0) (-12.5,0) (-10,1) (-7.5,0)
+      };
+      \addplot+[no marks,blue] plot coordinates {
+        (7.5,0) (10,1) (12.5,0) (13.5,0) (16,1) (18.5,0)
+      };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Spectre du signal échantilloné}
+\end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{Echantillonage}
+  \framesubtitle{choix de la fréquence d'échantillonage}
+  \begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}%
+      [echplot,
+      ylabel = {\tiny$|X_{e}(f)|$},
+      xtick = {-13,-5.5,5.5,13},
+      xticklabels = {$-F_{e}$,$-F_M$, $+F_M$,$F_{e}$},
+      ]
+      \addplot+[no marks, red] plot coordinates {
+        (-5.5,0) (-3,1) (-0.5,0) (0.5,0) (3,1) (5.5,0)
+      };
+      \addplot+[no marks,blue] plot coordinates {
+        (-18.5,0) (-16,1) (-13.5,0) (-12.5,0) (-10,1) (-7.5,0)
+      };
+      \addplot+[no marks,blue] plot coordinates {
+        (7.5,0) (10,1) (12.5,0) (13.5,0) (16,1) (18.5,0)
+      };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Spectre du signal échantilloné}
+\end{figure}\pause
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}%
+        [echplot,
+        ylabel = {\tiny$|X_E(f)|$},
+        xtick = {-10,-5.5,5.5,10},
+        xticklabels = {$-F_{e}$,$-F_M$, $+F_M$,$F_{e}$},
+        ]
+        \addplot+[no marks, red] plot coordinates {
+          (-5.5,0) (-3,1) (-0.5,0) (0.5,0) (3,1) (5.5,0)
+        };
+        \addplot[no marks, dashed ,blue] plot coordinates {
+          (-15.5,0) (-13,1) (-10.5,0) (-9.5,0) (-7,1) (-4.5,0)};
+        \addplot[no marks, dashed ,blue] plot coordinates {
+          (4.5,0) (7,1) (9.5,0) (10.5,0) (13,1) (15.5,0)
+        };
+        \addplot[no marks, dashed ,blue] plot coordinates {
+          (14.5,0) (17,1)};
+        \addplot[no marks, dashed ,blue] plot coordinates {
+          (-14.5,0) (-17,1)};
+
+        \addplot[no marks,black,thick] plot coordinates {
+          (-17,1) (-15.5,0.4) (-14.5,0.4)
+          (-13,1) (-10.5,0) (-9.5,0) (-7,1)
+          (-5.5,0.4) (-4.5,0.4) (-3,1) (-0.5,0) (0.5,0) (3,1)
+          (4.5,0.4)(5.5,0.4) (7,1) (9.5,0) (10.5,0) (13,1)
+          (14.5,0.4) (15.5,0.4) (17,1)};
+
+        \coordinate (R) at (axis cs: -5,0.25);
+      \end{axis}
+      % \draw[latex-] (R)  to[bend left] ++(-2,2) node[above]{\textit{Repliement}};
+
+    \end{tikzpicture}
+  \caption{Repliement de spectre}
+  \end{figure}
+\end{frame}
+\begin{frame}{Échantillonage}
+  \framesubtitle{Théorème de Shannon}
+
+  \begin{alertblock}{Theorème de Shannon}
+    Pour échantillonner de manière \emph{fidèle} un signal, il faut que la fréquence d'échantillonage $F_{e}$ vérifie:
+    \[
+      F_{e}\ge 2 F_{max}
+    \]
+  \end{alertblock}\pause
+  \begin{itemize}
+    \item ``Théorème fondamental du traitement du signal''
+    \item Les spectre ``fantômes'' ne parasitent pas le spectre original
+    \begin{itemize}
+      \item Pas de pertes d'information
+      \item On peux reconstruire le signal analogique (CNA)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Conclusion}
+  \begin{itemize}
+    \item Le traitement du signal est partout
+    \item forte intrication avec les mathématiques
+    \item
+  \end{itemize}
+\end{frame}
 
 
 
