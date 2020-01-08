@@ -6,11 +6,12 @@
 \usepackage{graphicx}
 \usepackage{ulem}
 \usepackage{pgfpages}
+\usepackage{float}
+\usepackage{subcaption}
 \usepackage{pgfplots}
 \graphicspath{{./fig/}}
 \usetheme[]{ens}
-\usepackage{float}
-\usepackage{subcaption}
+\setbeamertemplate{navigation symbols}{}
 
 %\usetheme[sectiontitle]{crans}
 \title{Le traitement du signal \\et le post-bac}
@@ -18,8 +19,8 @@
 \subtitle{}
 \author[]{\textsc{Pierre-Antoine Comby}}
 \institute{pierre-antoine.comby@ens-paris-saclay.fr}
+% \setbeameroption{show notes on second screen}
 \date{\today}
-\setbeameroption{show notes on second screen}
 \tikzset{every picture/.style={execute at begin picture={\shorthandoff{:;!?};}}}
 
 \pgfplotsset{
@@ -37,7 +38,6 @@
     axis lines=middle,
     xlabel style={at=(current axis.right of origin), anchor=west},
     ylabel style={at=(current axis.above origin), anchor=south},
- %   enlarge y limits={rel=0.13},
     enlarge x limits={rel=0.07},
     xtick=\empty,ytick=\empty
   },
@@ -56,13 +56,12 @@
 \begin{document}
 \begin{frame}
    \titlepage
-\end{frame}
+\note{Se présenter, énoncé le plan}
+ \end{frame}
 
-% \begin{frame}{Sommaire}
-%   \tableofcontents[subsubsectionstyle=hide]
-% \end{frame}
+
 \begin{frame}{Objectif de la séance}
-  \begin{itemize}[<+->]
+  \begin{itemize}[<+(1)->]
     \item Donner un avant goût des études supérieures en maths/physique.
     \note<.->[item]{ Exemple de la ``voie royale''/parcours d'excellence. Ne pas négliger les parcours universitaires, plus spécifiques.}
     \item Introduire des notions niveau bac/bac+1 de traitement du signal (utile pour un TPE par ex.)
@@ -72,18 +71,16 @@
   \end{itemize}
 \end{frame}
 
-\section{Mon parcours}
-\label{sec:label}
 \begin{frame}{Curriculum Vitae}
-  \begin{description}
+  \begin{description}[<+(1)->]
     \item[2012-2015:] Lycée Charles Péguy, BAC S , ABIBAC.
     \item[2015-2017:] Classe Prépa (Lycée Saint Louis, Paris)
-      \begin{itemize}
+      \begin{itemize}[<.->]
         \item PCSI
         \item PSI*
       \end{itemize}
     \item[2017-2021:] Ecole Normale Supérieure \sout{Cachan} Paris-Saclay
-      \begin{itemize}
+      \begin{itemize}[<.->]
         \item L3 Sciences de l'ingénieur/Physique
         \item M1 Electronique, Electrotechnique, Automatique
         \item \textit{M2 Stage de recherche à Karlsruhe: Tomographie à ultrason, imagerie médicale}
@@ -94,41 +91,37 @@
 \end{frame}
 \note{Un peu de chance, un peu de talent, beaucoup de travail}
 
-\section{Introduction au traitement du signal}
-\subsection{Définition}
+
+
+\section{Définition et exemples}
 \label{sec:label}
 \begin{frame}{Le traitement du signal}
-  \begin{block}{Définition}\pause
-    \begin{itemize}[<+->]
-      \item Un \textbf{signal} est une fonction d'une ou plusieurs variables qui véhicule de l'information sur un phénomène physique.
-      \note[item]<+->{tout est signal}
-      \pause
-      \item Un \textbf{système} (de traitement du signal) transforme un ou des signaux en d'autres signaux ou paramètre, dans le but d'en extraire de l'information.
-      \note[item]<+->{Tout est systeme}
+  \begin{itemize}
+    \item C'est quoi ?
+    \item À quoi ça sert?
+    \item Comment ça marche?
+  \end{itemize}\pause
+  \note{On va regarder Les fondements du TS}
+  \begin{block}{Définition}
+    \begin{itemize}
+      \item Un \textbf{signal} est une fonction d'une ou plusieurs variables qui véhicule de l'information sur un phénomène physique.\pause
+      \item Un \textbf{système} (de traitement du signal) transforme un ou des signaux en d'autres signaux ou paramètres, dans le but d'en extraire de l'information.
       \end{itemize}
   \end{block}
-  \begin{exampleblock}{Application}
-    \begin{columns}
-      \begin{column}{0.5\textwidth}
-        \begin{itemize}
-          \item mesures physiques
-          \item télécommunication
-          \item Fusées
-          \item Musique
-        \end{itemize}
-      \end{column}\pause
-      \begin{column}{0.5\textwidth}
-        \begin{itemize}
-          \item Traitement d'image
-          \item Biologie
-          \item Imagerie médicale,
-          \item mécanique, etc
-        \end{itemize}
-      \end{column}
-    \end{columns}
-  \end{exampleblock}
 \end{frame}
-\begin{frame}{Exemple élémentaire de TS}
+\begin{frame}{Des exemples}
+  \centering
+  \includegraphics[width=\textwidth]{buzz.png}
+\end{frame}
+\note[enumerate]{
+  \item Smart City: 5G, transmission, compression, analyse,
+  \item IRM de cerveau -> imagerie médicale: filtrage, segmentation, reconstruction/synthèse\ldots
+  \item Vision Artificielle: segmentation, reconnaissance, fiabilité
+  \item LHC: les tres grands instruments pour voir le tout petit
+  \item Voiture Autonome: protocoles de transmission, sécurité
+  \item SpaceX -> aérospatial: communiquer sur des miliers de km.
+}
+\begin{frame}{Différent type de TS}
   \setlength{\leftmargini}{2.5cm}         %new code: set margin length to 0
   \begin{itemize}
     \item[Mesure:\pause] Estimation de grandeurs caractéristiques\pause
@@ -140,40 +133,31 @@
     \item[Codage:\pause] Mise en forme pour transmission\pause
     \note<.(-1)->[item]{Toutes les communications numériques}
     \item[Compression:\pause] Réduction de la redondance d'information.\pause
-    \note<.(-1)->[item]{JPEG(3 à 100 fois plus petit), MP3, faire une fiche de cours}
+    \note<.(-1)->[item]{Netflix, JPEG(3 à 100 fois plus petit), MP3, faire une fiche de cours}
     \item[Modulation:\pause] Adaptation d'un signal aux caractéristiques d'une voie de transmission\pause
     \note<.(-1)->[item]{radio AM (WW2), FM }
     \item[Segmentation:\pause] Découpage en parties homogènes\pause
-    \note<.(-1)->[item]{Imagerie médicale, Filtre snapchat}
+    \note<.(-1)->[item]{Imagerie médicale, satellite, météo}
     \item[Reconnaissance:\pause] Identification de formes appartenant à un dictionnaire.\pause
     \note<.(-1)->[item]{Filtre Snapchat}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Encore des exemples}
-  \centering
-  \includegraphics[width=\textwidth]{buzz.png}
-\end{frame}
-\note[enumerate]{
-  \item Smart City: 5G, transmission, compression, analyse,
-  \item IRM de cerveau -> imagerie médicale: filtrage, segmentation, reconstruction/synthèse\ldots
-  \item Vision Artificielle: segmentation, reconnaissance, fiabilité
-  \item LHC: les tres grands instruments pour voir le tout petit
-  \item Voiture Autonome: protocoles de transmission, sécurité
-  \item SpaceX -> aérospatial: communiquer sur des miliers de kilomètre: modulation, codage, compression
-}
-\begin{frame}{Classification des signaux}
-  \begin{itemize}
+\begin{frame}{Différent type de signaux}
+
+  De l'ordre, il faut de l'ordre:
+
+  \begin{itemize}[<+(1)->]
     \item Nombre de variable (1-D (son), 2-D (image), N-D,\ldots)
     \item réel/complexe
-    \item périodiques (ex: $\cos(2\pi ft)$)
+    \item périodiques (ex: cos, sin)
     \item Déterministe/aléatoire
-    \begin{itemize}
+    \begin{itemize}[<.->]
       \item déterministe: évolution complètement prédictible
       \item aléatoire: non prédictible, non reproductible.
     \end{itemize}
     \item Continus / Discret
-    \begin{itemize}
+    \begin{itemize}[<.->]
       \item Analogique/Numérique
     \end{itemize}
   \end{itemize}
@@ -181,20 +165,27 @@
 \note{On étudie ici seulement des signaux réel, périodique,
   on va étudier/rappeler
   \begin{itemize}
-    \item la dualité fréquentiel de tout signal
+    \item la dualité fréquentielle de tout signal
     \item les bases de la conversion analogique numérique (tous les instruments de mesure physiques)
   \end{itemize}
 }
-\subsection{Dualité Fréquentielle}
+\section{Dualité Fréquentielle}
 \begin{frame}[fragile]{Analyse Spectrale}
+ \note{La3: 440 Hz,  apporter ordi/téléphone + Enceinte
+    \begin{itemize}
+      \item Sinus
+      \item triangle
+      \item Créneau /carré
+    \end{itemize}
+  }
   \vspace*{-1em}
   \begin{block}{Expérience}
     \begin{itemize}
-      \item<1-> 3 sons à la même fréquence, mais différente forme d'onde.
-      \item<5-> On entend d'autres fréquences, sans les voir: \visible<5->{\it un spectre}
+      \item<1-> 3 sons à la même fréquence, mais différentes formes d'onde.
+      \item<6-> On entend d'autres fréquences, sans les voir: \visible<7->{\it un spectre}
     \end{itemize}
 
-  \end{block}
+  \end{block}\pause[2]
   %% Time
   \begin{columns}
     \begin{column}{0.3\textwidth}
@@ -229,18 +220,12 @@
             (0,1) (2.5,-1) (5,1) (7.5,-1) (10,1)
           };
         \end{axis}
-      \end{tikzpicture}\pause[4]
+      \end{tikzpicture}\pause[5]
     \end{column}
   \end{columns}
   %% Freq
-  \note{La3: 440 Hz,  apporter ordi/téléphone + Enceinte
-    \begin{itemize}
-      \item Sinus
-      \item triangle
-      \item Créneau /carré
-    \end{itemize}
-  }
-  \pause[6]
+
+  \pause[7]
   \begin{columns}
     \begin{column}{.3\textwidth}
        \begin{tikzpicture}
@@ -287,34 +272,34 @@
     \end{tikzpicture}
   \end{column}
 \end{columns}
-\note{Les autres son proviennent d'autres fréquences, }
+\note{Les autres sons proviennent d'autres fréquences, }
 \end{frame}
 
 \begin{frame}{Décomposition de Fourier}
 \note{%
   Joseph Fourier, 1806, préfet de l'Isère. Travail sur l'équation de la chaleur (anneau en métal chauffé)
-
 }%
   \framesubtitle{Les maths}
   \begin{alertblock}{Théorème (Lycée)}
-    Toute fonction périodique peux s'écrire comme une somme pondérée de fonction sinusoïdale
+    Toute fonction périodique peut s'écrire comme une somme pondérée de fonction sinusoïdale
+    \pause
     \[
       x_{per}(t) = \sum_{n=0}^{+\infty}a_{n}cos(2\pi n f_{0}t)+b_{n}sin(2\pi n f_{0}t)
     \]
-  \end{alertblock}
-  \begin{itemize}
-    \item $(a_{n})$ et $(b_{n})$ sont des suites, appelées coefficients de fourier.
-    \item Les coeffients s'obtienne par produit scalaire sur des fonctions.
+  \end{alertblock}\pause
+  \begin{itemize}[<+->]
+    \item $(a_{n})$ et $(b_{n})$ sont des suites, appelées coefficients de Fourier.
+    \item Les coefficients s'obtiennent par produit scalaire de fonctions.
       \note[item]{$a_{n} = \int_{-T/2}^{T/2}x(t)\cos(2\pi nft)dt$}
-    \item Théorème généralisable a toute fonction à énergie fine ($\sim$ toutes les fonctions en physiques).
+    \item Théorème généralisable à toutes fonctions à énergie finie ($\sim$ toutes les fonctions en physique).
       \note[item]{$X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2\pi i ft}d t$}
   \end{itemize}
-
 \end{frame}
 \begin{frame}[fragile]{Décomposition de Fourier}
-  \framesubtitle{La physique}
+  \framesubtitle{Exemple: le créneau}
   \begin{tikzpicture}
     \begin{axis}[timeplot,domain=0:10,
+      ymax=1.2,ymin=-1.2,
       height=0.6\textheight,width=1.1\textwidth]
       \visible<1->{
       \addplot[mark=none,const plot] coordinates {
@@ -325,8 +310,14 @@
           \addplot+[mark=none,blue,thick] table [x=x, y=\i, col sep=comma] {creneau.csv};}
       }
     \end{axis}
-  \end{tikzpicture}\\
-  \begin{tikzpicture}
+  \end{tikzpicture}
+      \[\hat{x}(t)=
+      \visible<2->{\frac{4A}{\pi}\times\left[\sin(2\pi f_{0}t)\right.}
+      \visible<3->{+\frac{1}{3}\sin(2\pi 3f_{0}t)}
+      \visible<4->{+\frac{1}{5}\sin(2\pi 5f_{0}t)}
+      \visible<5->{+\cdots}
+      \visible<2->{\left.\right]}\]
+\begin{tikzpicture}
 \begin{axis}
           [freqplot, width=\textwidth, height=0.3\textheight,
           xmin=0,xmax=15,ymin=0,ymax=1.2,
@@ -342,17 +333,57 @@
           };
       \end{axis}
   \end{tikzpicture}
-      $\hat{x}(t)=
-      \visible<2->{\frac{4A}{\pi}\times\left[\sin(2\pi f_{0}t)\right.}
-      \visible<3->{+\frac{1}{3}\sin(2\pi 3f_{0}t)}
-      \visible<4->{+\frac{1}{5}\sin(2\pi 5f_{0}t)}
-      \visible<5->{+\cdots}
-      \visible<2->{\left.\right]}$
+
 \end{frame}
 \note{phénomène de Gibbs, du a la discontinuité de la fonction créneau}
+\begin{frame}[fragile]{Décomposition de Fourier}
+  \framesubtitle{Exemple: triangle}
+  \begin{tikzpicture}
+    \begin{axis}[timeplot,domain=0:10,
+      ymax=1.2,ymin=-1.2,
+      height=0.6\textheight,width=1.1\textwidth]
+      \visible<1->{
+      \addplot[mark=none,] coordinates {
+        (0,0) (1.25,1) (3.75,-1) (6.25,1) (8.75,-1) (10,0)
+      };}
+      \foreach \i [count=\ii] in {1,3,5,15,50}{
+        \only<+(1)>{
+          \addplot+[mark=none,blue,thick] table [x=x, y=\i, col sep=comma] {triangle.csv};}
+      }
+    \end{axis}
+  \end{tikzpicture}
+      \[\hat{x}(t)=\visible<2->{\frac{8A}{\pi^{2}}\times\left[\sin(2\pi f_{0}t)\right.}
+      \visible<3->{-\frac{1}{9}\sin(2\pi 3f_{0}t)}
+      \visible<4->{+\frac{1}{25}\sin(2\pi 5f_{0}t)}
+      \visible<5->{+\cdots}
+      \visible<2->{\left.\right]}\]
+  \begin{tikzpicture}
+\begin{axis}
+          [freqplot, width=1.1\textwidth, height=0.3\textheight,
+          xmin=0,xmax=15,ymin=0,ymax=1.2,
+          xtick={1,3,...,15},         xticklabels={$f_{0}$,$3f_{0}$,$5f_{0}$,$7f_{0}$,$9f_{0}$,$11f_{0}$,$13f_{0}$,$15f_{0}$},
+          x tick label style={font=\tiny}
+          ]
+          \draw<2->[blue,very thick](axis cs:1,0) -- (axis cs:1,1)    node{$\cdot$};
+          \draw<3->[blue,very thick](axis cs:3,0) -- (axis cs:3,0.11) node{$\cdot$};
+          \draw<4->[blue,very thick](axis cs:5,0) -- (axis cs:5,0.008)  node{$\cdot$};
+          \draw<5->[blue,very thick]
+          \foreach \x in {7,9,...,15}{
+            (axis cs:\x,0) -- (axis cs:\x,1/\x^2)  node{$\cdot$}
+          };
+      \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+
+
 \begin{frame}{Dualité temps-fréquence}
   \begin{alertblock}{À retenir}
-    Tout signal ``physique'' possède un unique signal équivalent dans le domaine \emph{fréquentiel}. L'operation pour passer de l'un à l'autre est appelé \emph{transformée de Fourier}
+    \begin{itemize}[<+->]
+      \item Tout signal ``physique'' possède un unique signal équivalent dans le domaine \emph{fréquentiel}.
+      \item L'opération pour passer de l'un à l'autre est appelée \emph{la transformée de Fourier}
+        $X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2\pi i ft}d t$
+    \end{itemize}
   \end{alertblock}
   \begin{itemize}[<+->]
     \item Preuve: Bac+3, rigoureux en Bac+5
@@ -362,7 +393,7 @@
   \begin{block}{Remarque}
     Tout signal périodique possède un spectre discret.
   \end{block}\pause
-  La transformée de fourier est utilisé notamment en:
+  La transformée de Fourier est utilisée notamment en:
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \begin{itemize}[<+->]
@@ -380,21 +411,35 @@
 
 \end{frame}
 
-\subsection{Conversion Analogique Numérique}
+\section{Conversion Analogique Numérique}
 \begin{frame}{Analogique vs Numérique}
   \framesubtitle{Exemples}
       \note{Demander 3 exemples Analogique, Numériques}
   \begin{columns}
     \begin{column}{.5\textwidth}
-      Signaux Analogiques:\pause[1]
+      Signaux Analogiques:\pause[2]
       \begin{itemize}
-        \item la voix,
-        \item piste vinyle
-        \item les rayons du soleil
-        \item L'altitude
+        \item La voix
+        \item Les sillons d'un disque vinyl
+        \item La lumière du soleil
+        \item La batterie d'un smartphone
       \end{itemize}
-      \pause[2]
-      \begin{block}<4>{}
+      \pause[3]
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Signaux Numériques:\pause[4]
+      \begin{itemize}
+        \item Les sillons d'un CD
+        \item Une image
+        \item L'ADN
+        \item 100111101
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\pause[5]
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+       \begin{block}{}
         \begin{itemize}
           \item Continus
           \item Valeurs quelconques
@@ -402,16 +447,9 @@
       \end{block}
     \end{column}
     \begin{column}{.5\textwidth}
-      Signaux Numériques:\pause[3]
-      \begin{itemize}
-        \item piste CD
-        \item Images
-        \item métronome
-        \item 100111101
-      \end{itemize}
-      \begin{block}<4>{}
+      \begin{block}{}
         \begin{itemize}
-          \item temps discret
+          \item temps/index discret
           \item valeurs limitées
         \end{itemize}
       \end{block}
@@ -463,11 +501,11 @@
       \end{column}}
     \end{columns}
   \end{block}
-  % \centering\vspace{2em}\hspace{2em}
+  { \centering\vspace{2em}\hspace{2em}
   \begin{tikzpicture}
     \only<1-2>{
     \pgfplotsset{xtick=\empty}}
-    \only<3>{
+    \only<3->{
     \pgfplotsset{
       xtick={1.5,3,4.5,6,7.5,9},
       xticklabels={$T_e$,$2T_e$,$3T_e$,$4T_e$,$5T_e$,$6T_e$}
@@ -482,7 +520,7 @@
         x tick label style={font=\tiny}]
 
         \addplot+[smooth,no marks] plot coordinates{(0,2) (2,1.5) (3,2) (4,1) (5,-1.5)(6,-1.5)(7,0)(9,1)};
-        \draw<3>[dashed,red]
+        \draw<3->[dashed,red]
         (axis cs:1.5,-2) -- (axis cs:1.5,1.6)node{$\bullet$}
         (axis cs:3,-2)   -- (axis cs:3,2)node{$\bullet$}
         (axis cs:4.5,-2) -- (axis cs:4.5,-.25)node{$\bullet$}
@@ -491,6 +529,10 @@
         (axis cs:9,-2)   -- (axis cs:9,1)node{$\bullet$};
       \end{axis}
     \end{tikzpicture}
+  }
+  \begin{block}<4->{Remarque}
+    La transformée de Fourier d'un peigne est un peigne.
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]{Échantillonage}
@@ -508,7 +550,7 @@
     \end{axis}
   \end{tikzpicture}
   \caption{Spectre du signal continu}
-  \note{Fréquence négative : Ca vient de la formulation générale de la transformée de fourier, symétrique de la partie positive (signaux réel)}
+  \note{Fréquence négative : Ca vient de la formulation générale de la transformée de Fourier, symétrique de la partie positive (signaux réel)}
 \end{figure}
 \begin{figure}
   \centering
