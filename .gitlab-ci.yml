@@ -9,8 +9,11 @@ compile_pdf:
     - ssh-keyscan stark.comby.xyz >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - latexmk -pdf main.tex
-    - scp main.pdf pac@stark.comby.xyz:ftp/public/pres/intro-ts.pdf
-  artifacts:
+    - latexmk -pdf slides/main.tex
+    - scp slides/main.pdf pac@stark.comby.xyz:ftp/public/pres/intro-ts.pdf
+    - latexmk -pdf rapport_activite/main.tex
+    - scp rapport_activite/main.pdf pac@stark.comby.xyz:ftp/public/rapport_activite.pdf
+   artifacts:
     paths:
-      - main.pdf
+      - slides/main.pdf
+      - rapport_activite/rapport.pdf

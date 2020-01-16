@@ -1,0 +1,142 @@
+\documentclass[12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{eurosym}
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+%% Useful packages
+\usepackage{titlesec}
+
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocstyle}
+\usepackage{PTSerif}
+\usepackage{xcolor}
+\usepackage{multirow}
+\definecolor{bleu}{rgb}{0.08, 0.45, 0.53}
+
+\titleformat{\section}
+{\color{bleu}\normalfont\bfseries}
+{\color{bleu}}{1em}{\MakeUppercase}
+
+\renewcommand{\thesubsection}{\arabic{subsection}.}
+\titleformat{\subsection}
+{\color{bleu}\normalfont\bfseries}
+{\hspace{3em}\color{bleu}\thesubsection}{1em}{}
+
+\renewcommand{\thesubsubsection}{\alph{subsubsection}.}
+\titleformat{\subsubsection}
+{\color{bleu}\normalfont}
+{\hspace{6em}\color{bleu}\thesubsubsection}{1em}{\MakeUppercase}
+
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=6pt, label={$\bullet$}}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+ \fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\color{bleu} \thepage / \pageref{LastPage}}
+
+\linespread{1.25}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+    \begin{figure}[!tbp]
+      \centering
+        \includegraphics[width=0.4\textwidth]{logo.png}
+    \end{figure}
+
+    \vspace*{0.5cm}
+    \textsc{\LARGE \textbf{Diplôme de l'ENS Paris-Saclay}}\\[1em]    % University Name
+    \textsc{\Large Enseignement Supérieur \\ ES 4 -Diffusion des savoir}\\[0.5 cm]   % Course Code
+    \vspace{2cm}
+    \textsc{\LARGE \textbf{Rapport d'activité}}\\ % University Name
+    \vspace{0.2cm}
+    \textsc{\LARGE \textbf{Date: \today}}   % University Name
+  \end{center}
+  \vspace*{3em}
+  \hspace*{2cm}
+  \begin{minipage}[l]{0.8\linewidth}
+    \Large
+    \textsc{\large \textbf{Nom:} Comby}\\
+    \textsc{\large \textbf{Prénom:} Pierre-Antoine}\\
+    \textsc{\large \textbf{Département:} EEA}\\
+    \textsc{\large \textbf{E-Mail:} pierre-antoine.comby@ens-paris-saclay.fr}\\
+  \end{minipage}
+
+\vspace{-15em}
+  \begin{picture}(50,50)
+\put(-20,-325){\hbox{\includegraphics[scale=0.6]{footer_left.png}}}
+\end{picture}
+
+\begin{picture}(50,50)
+\put(400,-270){\hbox{\includegraphics[scale=0.35]{footer_right.png}}}
+\end{picture}
+
+\end{titlepage}
+
+\section{Introduction}
+
+Le 10 janvier 2019, j'ai eu l'opportunité d'intervenir le temps d'une séance de deux heures devant un groupe de 35 élèves de 1ère Générale spécialité physique une introduction au traitement du signal. Ce cours est à l'initiative de Virginie Grosjean-Squinabol, professeur de physique au Lycée Jean-Zay d'Orléans, qui m'a accueillie chaleureusement dans sa classe pour y intervenir de manière autonome.
+
+Cette intervention est valorisé par le présent rapport dans le cadre du diplôme de l'ENS Paris-Saclay, pour la validation de l'item ES4 - Diffusion des savoirs.
+
+
+\section{Préparation de l'activité}
+Pour préparer mon intervention devant les élèves, j'ai pu bénéficié des conseil et retours de Mme Grosjean-Squinabol, qui m'ont permis de m'assurer que mon travail s'inscrivait dans une démarche au long cours dans les cadres du programme de l'année.
+\subsection{Objectifs Pédagogiques}
+Cette intervention a ainsi eu pour but d'introduire aux élèves de nouvelles notions, à l'interface entre physique et mathématiques , ouvrant la porte vers des études supérieures. Et également de présenter mon travail de recherche actuelle, que je poursuis actuellement en année ARPE au Karlsruher Institut für Technologie.
+\begin{itemize}
+  \item De donner un aperçu des applications du traitement du signal, développer plus amplement dans les études supérieures, et utiliser au quotidien.
+  \item D'introduire des notions nouvelles à l'interface de la physique et des mathématiques, indispensable en traitement du signal.
+  \item De présenter mon parcours post-bac,
+\end{itemize}
+\subsection{Problématiques rencontrées}
+
+
+
+\section{Retour sur le déroulement de l'activité}
+
+La séance s'est déroulée en deux parties, d'abord une partie cours, puis un temps d'échange sur le sujet abordé, ainsi que mes travaux de recherche et les études supérieurs en sciences physique.
+\subsection{Cours sur le traitement du signal}
+
+
+Cette partie a largement été préparée en amont de la séance, comme décris précédemment, pour qu'il y est une montée graduelle en niveau, partant d'un niveau pré-bac pour finir sur des notions abordé généralement à niveau bac+2.
+Cette partie, largement préparée en amont a duré 1h30 -- et non 1h comme initialement prévu -- cela est du en majeure partie aux questions et interactions pendant la présentation, qui ont été particulièrement riches en échanges, notamment sur la fin de la présentation. De plus, face à des concepts nouveau, il m'a été nécessaire de m'y reprendre à plusieurs fois pour expliquer certain concept, en les recoupant avec des exemples déjà abordé.
+   
+Si le début de la séance s'est déroulé fasse à une classe très calme,  quelques peu endormie; la sollicitation des élèves pour donner des exemples, ainsi que la démonstration en pratique des théorèmes abordée a permis d'obtenir une classe plus attentive, certains allant même jusqu'à prendre des notes, ce qui n'étais pas le cas au début. Je pense que l'effet de nouveauté, ainsi que le changement de paradigme du professeur (un étudiant à peine plus vieux qu'eux, utilisant des références de la pop-culture) a notamment joué en ma faveur.
+
+\subsection{Temps d'échange}
+
+ Ce temps d'échange sous formes de question/réponses a abordé des thèmes variés dans le temps qu'il m'était encore imparti (ennviron trente minutes), d'abords très proche du contenu abordé au préalable, puis sur mon travail de recherche et enfin sur les études supérieurs, (niveau attendu, études à l'étranger,\ldots); il a noté que le même jour se dérouler le forum des étudiants pour tous les lycéens d'Orléans, et que la plupart des élèves s'y rendait après la séance. Ainsi ce temps d'échange leur à également permis d'avoir déjà un nouveau regards sur les études supérieures
+
+ \section{Apports personnels}
+ \subsection{En amont}
+J'ai appris à expliquer des concepts qui m'intéressent, en me forçant à me mettre à un niveau différent de celui du public auquel je m'adresse habituellement, à savoir des professeurs ou des camarades de promo, c'est-à-dire avec des connaissances
+comparables ou supérieures aux miennes.
+
+Par ailleurs, bien qu'ayant déjà manipulé \LaTeX, je m'en suis cette fois-ci servi pour présenter un cours, ce qui m'a permis de l'appréhender autrement et de développer ma capacité à l'utiliser.
+ \subsection{Pendant}
+
+
+ \section{Conclusion}
+
+ Je retiendrai de cette expérience formatrice de nombreuses compétences pédagogiques, la satisfaction d'une présentation bien rédigé bien que toujours perfectible, et le plaisir de transmettre des connaissances qui me passionnent.\\[2em]
+{\it
+ Ci-joints:
+ \begin{itemize}
+   \item Attestation d'intervention
+   \item Support de présentation et notes associées.
+ \end{itemize}
+ }
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% ispell-local-dictionary: "francais"
+%%% End:
