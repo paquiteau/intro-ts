@@ -11,8 +11,8 @@ compile_pdf:
     script:     
         - latexmk -cd -pdf slides/main.tex     
         - scp slides/main.pdf pac@stark.comby.xyz:ftp/public/pres/intro-ts.pdf     
-        - latexmk -cd -pdf rapport_activite/main.tex     
-        - scp rapport_activite/main.pdf pac@stark.comby.xyz:ftp/public/rapport_activite.pdf    
+        - latexmk -cd -pdf rapport_activite/rapport.tex
+        - scp rapport_activite/rapport.pdf pac@stark.comby.xyz:ftp/public/rapport_activite.pdf
     artifacts:     
         paths:       
             - slides/main.pdf       
